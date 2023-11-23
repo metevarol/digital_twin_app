@@ -3,33 +3,35 @@ import 'package:flutter/material.dart';
 // ... Diğer importlar ...
 
 class RegistrationScreen extends StatelessWidget {
+  const RegistrationScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Registration")),
+      appBar: AppBar(title: const Text("Registration")),
       body: Padding(
-        padding: EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(20.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            TextField(
+            const TextField(
               decoration: InputDecoration(labelText: 'Email'),
               keyboardType: TextInputType.emailAddress,
             ),
-            TextField(
+            const TextField(
               decoration: InputDecoration(labelText: 'Password'),
               obscureText: true,
             ),
-            TextField(
+            const TextField(
               decoration: InputDecoration(labelText: 'Confirm Password'),
               obscureText: true,
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 // Kayıt işlemi için kod buraya
               },
-              child: Text('Sign Up'),
+              child: const Text('Sign Up'),
             ),
           ],
         ),
