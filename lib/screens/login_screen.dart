@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'registration_screen.dart';
+import 'home_screen.dart';
 
 // ... Diğer importlar ...
 
@@ -28,6 +29,10 @@ class LoginScreen extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 // Giriş işlemi için kod buraya
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => HomeScreen()),
+                );
               },
               child: const Text('Login'),
             ),
