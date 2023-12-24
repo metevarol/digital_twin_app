@@ -19,7 +19,52 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
+        // AppBar Teması
+        appBarTheme: AppBarTheme(
+          color: Color.fromRGBO(0, 29, 43, 1), // AppBar arka plan rengi
+          titleTextStyle: TextStyle(
+            color: Colors.white, // AppBar başlık metin rengi
+            fontSize: 25,
+            fontWeight: FontWeight.bold, // Metin boyutu
+          ),
+          iconTheme: IconThemeData(
+            color: Colors.white, // AppBar ikon rengi (geri butonu dahil)
+          ),
+          // Diğer AppBar stilleri
+        ),
+        // Genel Tema Renkleri
         primarySwatch: Colors.blue,
+        backgroundColor: Color.fromRGBO(0, 29, 43, 1),
+
+        // Yazı Stilleri
+        textTheme: TextTheme(
+          bodyText1: TextStyle(color: Colors.white),
+          bodyText2: TextStyle(color: Colors.white), // Varsayılan metin rengi
+        ),
+
+        // Buton Stilleri
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            primary: Color.fromRGBO(
+              35,
+              135,
+              46,
+              1,
+            ), // ElevatedButton arka plan rengi
+            onPrimary: Colors.white, // ElevatedButton metin rengi
+          ),
+        ),
+        textButtonTheme: TextButtonThemeData(
+          style: TextButton.styleFrom(
+            primary: Colors.white, // TextButton metin rengi
+          ),
+        ),
+
+        // TextField Stilleri
+        inputDecorationTheme: InputDecorationTheme(
+          labelStyle: TextStyle(color: Colors.white), // Etiket metni rengi
+          hintStyle: TextStyle(color: Colors.white), // İpucu metni rengi
+        ),
       ),
       home: const LoginScreen(),
     );
