@@ -2,7 +2,7 @@ import 'package:digital_twin_app/screens/registration_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'profile_screen.dart';
-import 'home_screen.dart';
+import 'main_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -12,8 +12,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final _emailController = TextEditingController(text: "metevarol@gmail.com");
-  final _passwordController = TextEditingController(text: "aaasss");
+  final _emailController = TextEditingController(text: "wete456@gmail.com");
+  final _passwordController = TextEditingController(text: "mete123");
 
   @override
   void dispose() {
@@ -34,7 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
       // Giriş başarılı, ana ekrana yönlendir
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => UserProfileScreen()),
+        MaterialPageRoute(builder: (context) => MainScreen()),
       );
     } on FirebaseAuthException catch (e) {
       // Hatalı giriş durumunda kullanıcıya bilgi ver

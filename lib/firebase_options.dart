@@ -55,6 +55,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '403779880559',
     projectId: 'digital-twin-31756',
     storageBucket: 'digital-twin-31756.appspot.com',
+    databaseURL:
+        'https://digital-twin-31756-default-rtdb.europe-west1.firebasedatabase.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(

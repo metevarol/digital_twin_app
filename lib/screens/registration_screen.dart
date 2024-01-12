@@ -44,8 +44,24 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       try {
         UserCredential userCredential = await FirebaseAuth.instance
             .createUserWithEmailAndPassword(email: email, password: password);
+        // Kullanıcıyı Realtime Database'e ekleyin
+        DatabaseReference ref = FirebaseDatabase.instance.ref("Users");
 
-        // Firebase'e kullanıcı bilgilerini kaydetme işlemleri burada
+        await ref.child(userCredential.user!.uid).set({
+          'name': name,
+          'age': age,
+          'height': height,
+          'weight': weight,
+          'email': email,
+          'password': password,
+          'currentMovement': {
+            'accuracy': 'accuracy',
+            'currentMove': 'currentMove',
+            'duration': 'duration',
+            'isStarted': 'isStarted',
+            'liveScore': 'liveScore'
+          }
+        });
 
         Navigator.pop(context);
       } on FirebaseAuthException catch (e) {

@@ -3,6 +3,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:async';
 import 'home_screen.dart';
+import 'login_screen.dart';
 
 class UserProfileScreen extends StatefulWidget {
   @override
@@ -21,12 +22,20 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     _loadUserProfile();
   }
 
+  void _logOut() async {
+    await FirebaseAuth.instance.signOut();
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => LoginScreen()),
+    );
+  }
+
   void _loadUserProfile() {
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       DatabaseReference ref =
           FirebaseDatabase.instance.ref("Users/${user.uid}");
-
+      print(user.uid);
       ref.once().then((DatabaseEvent event) {
         final data = event.snapshot.value as Map<dynamic, dynamic>?;
         if (data != null) {
@@ -44,7 +53,15 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Profile")),
+      appBar: AppBar(
+        title: Text("Profile"),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.exit_to_app),
+            onPressed: _logOut,
+          ),
+        ],
+      ),
       backgroundColor: Theme.of(context).backgroundColor,
       body: Center(
         child: Column(

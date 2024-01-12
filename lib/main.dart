@@ -65,6 +65,15 @@ class MyApp extends StatelessWidget {
           labelStyle: TextStyle(color: Colors.white), // Etiket metni rengi
           hintStyle: TextStyle(color: Colors.white), // İpucu metni rengi
         ),
+        bottomNavigationBarTheme: BottomNavigationBarThemeData(
+          backgroundColor:
+              Color.fromRGBO(0, 29, 43, 1), // Alt çubuk arka plan rengi
+          selectedItemColor: Colors.white, // Seçili öğe rengi
+          unselectedItemColor: Colors.grey, // Seçilmemiş öğe rengi
+          selectedLabelStyle: TextStyle(fontSize: 12), // Seçili etiket stil
+          unselectedLabelStyle:
+              TextStyle(fontSize: 10), // Seçilmemiş etiket stil
+        ),
       ),
       home: const LoginScreen(),
     );

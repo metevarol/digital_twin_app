@@ -10,9 +10,35 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   String _accuracy = "0";
+  String _liveScore = "0";
   String _currentMove = "";
-  int _duration = 0;
+  String _duration = "0";
   bool _isStarted = false;
+
+  String getImageForCurrentMove(String currentMove) {
+    switch (currentMove) {
+      case 'Chair_Pose':
+        return 'assets/images/chair_pose.png';
+      case 'Flamingo_Pose':
+        return 'assets/images/flamingo_pose.png';
+      case 'Goddess_Pose':
+        return 'assets/images/goddess_pose.jpg';
+      case 'Half_Moon_Pose':
+        return 'assets/images/half_moon_pose.png';
+      case 'Mountain_Pose':
+        return 'assets/images/mountain_pose.png';
+      case 'T_Pose':
+        return 'assets/images/t_pose.png';
+      case 'Tree_Pose_1':
+        return 'assets/images/tree_pose.jpg';
+      case 'Tree_Pose_2':
+        return 'assets/images/tree_pose_2.jpg';
+      case 'Warrior_Pose':
+        return 'assets/images/warrior_pose.png';
+      default:
+        return 'assets/images/t_pose.png'; // Varsayılan bir resim
+    }
+  }
 
   @override
   void initState() {
@@ -30,9 +56,10 @@ class _HomeScreenState extends State<HomeScreen> {
         final data = event.snapshot.value as Map<dynamic, dynamic>?;
         if (data != null) {
           setState(() {
-            _accuracy = '${data['accuracy'] ?? 0}%';
+            _accuracy = data['accuracy'] ?? '';
+            _liveScore = '${data['liveScore'] ?? 0}%';
             _currentMove = data['currentMove'] ?? '';
-            _duration = int.parse(data['duration'] ?? '0');
+            _duration = data['duration'] ?? '';
             _isStarted = data['isStarted'] == 'true';
           });
         }
@@ -42,6 +69,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double calRate = 0.83;
+    double calories = calRate * int.parse(_accuracy) / 100;
+    String modifiedCurrentMovement = _currentMove.replaceAll('_', ' ');
     return Scaffold(
       appBar: AppBar(title: Text("Exercise Area")),
       backgroundColor: Theme.of(context).backgroundColor,
@@ -55,35 +85,65 @@ class _HomeScreenState extends State<HomeScreen> {
                   Text('Current Movement',
                       style:
                           TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-                  Text('$_currentMove',
+                  Text('$modifiedCurrentMovement',
                       style: TextStyle(
                           fontSize: 20, fontWeight: FontWeight.normal)),
                   SizedBox(height: 20),
                   Image.asset(
-                    'assets/images/shouldergif.gif',
-                    width: 300.0,
+                    getImageForCurrentMove(_currentMove),
+                    width: 200.0,
                   ), // Resim burada yükleniyor
                   SizedBox(height: 50),
-                  Text('Accuracy Rate: $_accuracy',
+                  Text('Live Score: $_liveScore',
                       style: TextStyle(
-                          fontSize: 30,
+                          fontSize: 25,
                           fontWeight: FontWeight.bold,
-                          color: Color.fromARGB(255, 17, 201, 17))),
+                          color: Color.fromARGB(255, 201, 32, 17))),
                   SizedBox(height: 50),
                   Text('Time Remaining',
                       style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
                   SizedBox(height: 20),
-                  CountdownTimer(duration: 30),
+                  CountdownTimer(duration: int.parse(_duration)),
                   SizedBox(height: 50),
                 ],
               )
             : Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
+                  Text('Next Movement',
+                      style:
+                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+                  Text('$modifiedCurrentMovement',
+                      style: TextStyle(
+                          fontSize: 20, fontWeight: FontWeight.normal)),
+                  SizedBox(height: 20),
+                  Image.asset(
+                    getImageForCurrentMove(_currentMove),
+                    width: 200.0,
+                  ),
+                  SizedBox(height: 20),
+                  Text('Accuracy Rate: $_accuracy%',
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Color.fromARGB(255, 17, 201, 17))),
+                  SizedBox(height: 20),
+                  Text('🔥Calories Burned:',
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Color.fromARGB(255, 201, 100, 17))),
+                  SizedBox(height: 5),
+                  Text('$calories',
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Color.fromARGB(255, 201, 100, 17))),
+                  SizedBox(height: 50),
                   CircularProgressIndicator(),
                   SizedBox(height: 20),
-                  Text('Exercises waiting..',
+                  Text('Next exercises waiting..',
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                 ],
@@ -135,18 +195,12 @@ class _CountdownTimerState extends State<CountdownTimer> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        CircularProgressIndicator(
-          value: _progress, // İlerleme değeri
-          backgroundColor: Colors.grey,
-          valueColor: AlwaysStoppedAnimation<Color>(
-            Color.fromRGBO(
-              35,
-              135,
-              46,
-              1,
-            ),
-          ),
-        ),
+        SizedBox(height: 20),
+        Text(
+          '$_remainingTime s',
+          style: TextStyle(
+              fontSize: 30, fontWeight: FontWeight.bold, color: Colors.green),
+        )
       ],
     );
   }
